@@ -1,0 +1,53 @@
+---
+title: "R Homework"
+author: "Jeho Park"
+date: "11/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework Assignment
+
+### The following R code chunk runs the code within the chunk block and displays the result beneath the chunk.
+
+```{r cars}
+summary(cars)
+```
+
+#### To learn more about R Markdown, check out the R Markdown tutorial at https://rmarkdown.rstudio.com/lesson-1.html 
+
+### (1) Using cars dataset, create a vector 'stop_mean' that contains mean stopping distance and display the result.
+```{r stop_mean_chunk}
+# Type your answer below
+
+```
+
+### (2) Create a matrix 'cars_mat' by converting the cars dataset (which is a data frame) and diplay its type.
+```{r cars_mat_chunk}
+# Type your answer below
+
+```
+### The following chunk will load 'hflights' datasets. If it's not already installed, it will install the package
+#### (Do not change the chunk below)
+```{r hflight-install}
+if(!require(hflights)) install.packages("hflights",repos = "http://cran.us.r-project.org")
+```
+
+### (3) Diplay the stucture of the hflights datasets
+```{r hfligt_structure}
+# Type your answer below
+
+```
+
+### (4) Using hflights datasets, create a variable called 'x' that contains the mean flight arrival delay and display the value  (which should be 7.094334) 
+#### Hint: There are missing values. So the question is how to exclude those missing values from the data.
+
+```{r}
+# Type your answer below
+
+```
+
+_[Source] SCF/D-Lab R bootcamp at UC Berkeley_

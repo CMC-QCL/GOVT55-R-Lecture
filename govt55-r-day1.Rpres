@@ -1,0 +1,427 @@
+Visualization and Basic Statistical Analysis using R
+========================================================
+author: Jeho Park
+date: Nov. 12, 2019
+transition: none
+
+R Guest Lecture 
+
+DAY 1
+
+Reference:
+========================================================
+
+Some materials are adapted from the following websites:<br>
+* R Bootcamp by Jared Knowles: http://jaredknowles.com/r-bootcamp/<br>
+* R Bootcamp at Berkely: http://statistics.berkeley.edu/computing/r-bootcamp/
+
+Some Housekeeping Stuff
+========================================================
+- **Slides** at http: 
+- **Files** at 
+- **Data files** at 
+
+
+Learning Objectives:
+========================================================
+_By the end of the Day 1 R lecture, you will be able to:_
+* Use basic RStudio IDE
+* Identify and create different data types in R
+* Import CSV files and DTA files
+* Create and use R Markdown
+* Install R packages
+* Draw a scatter plot using _graphics_ package and _ggplot2_ package
+* Use subsetting methods
+
+Day 1 Agenda
+========================================================
+* Module 0: Introduction
+  + About this bootcamp
+  + About R
+  + Getting ready (R environment setup)
+* Module 1: The Basics of R
+  + RStudio
+  + R Data Structure (R Objects)
+  + Basic graphics
+*	Module 2: RStudio 
+  + R project and Workspace 
+  + R packages (installing and loading)
+
+Day 1 Agenda (cont.)
+========================================================
+* Module 3: Working with data 
+  + Data import and export: csv vs. dta data
+  + Dataframes and Matrix
+  + Subsetting
+* Homework and Q&A 
+  + R Markdown
+ 
+Day 2 Agenda
+========================================================
+* Module 4: Graphics package: ggplot2 
+  + About ggplot2 and some cool examples
+* Module 5: Descriptive Statistics and Visualization 
+  + Descriptive Stats
+  + Why do we need visualization: Anscombe's quartet & John Snow’s Map
+* Module 6: Visualization Methods
+  + Scatter plot, Line graph, Dot plot, Histogram and Density
+* Module 7: Regression 
+  + Simple Linear Regression
+  + lm summary statistics
+
+What is R?
+========================================================
+* R is a statical programming language/environment.
+* R is open source/free.
+* R is widely used/prefered.
+* R is cross-platform.
+* R is hard to learn (really?).
+
+What is not R?
+========================================================
+* S: R's ancestor
+* S-Plus: Commercial; modern implementation of S
+* SAS: Commercial; widely used in the commercial analytics.  
+* SPSS: Commercial; easy to use; widely used in Social Science.
+* MATLAB: Commercial; can do some Stats. 
+* Python: Also can do some Stats; good in text data manipulation.
+
+Then Why R?
+========================================================
+* __R community is active and constantly growing__
+* R is most popular (other than SPSS and SAS)
+* R has tons of user generated libraries/packages
+* R code is easily shared with others
+* R is constantly improved
+
+
+***
+
+![R listserv help](Rworkshop-slides-figure/r-listserv.png)
+* Source: http://r4stats.com/articles/popularity/
+
+
+Then Why R?
+========================================================
+* R community is active and constantly growing
+* __R is most popular (other than SPSS and SAS)__
+* R has tons of user generated libraries/packages
+* R code is easily shared with others
+* R is constantly improving
+
+***
+
+![R Google Scholar Hit](Rworkshop-slides-figure/fig_2a_scholarlyimpactbig61.png)
+
+Then Why R?
+========================================================
+After SPSS and SAS:<br>
+![R Google Scholar Hit](./Rworkshop-slides-figure/fig_2a_scholarlyimpactlittle6.png)
+
+Then Why R?
+========================================================
+* R community is active and constantly growing
+* R is most popular (other than SPSS and SAS)
+* __R has tons of user generated libraries/packages__
+* R code is easily shared with others
+* R is constantly improved
+
+***
+
+![R Extentions](Rworkshop-slides-figure/r-extensions.png)
+
+Getting Ready!
+========================================================
+* Check R  
+* Check RStudio  
+* Check slides  
+* Check check check...
+
+Module 1: The Basics of R 
+========================================================
+* RStudio and its functionality
+* General stuff
+* Workspace of R and some calculations
+* R Objects (Vectors, Matrices, Data frames, and Factors)
+* Converting between different types of objects
+* Getting help online and offline
+
+RStudio
+========================================================
+* Integrated Development Environment for R
+* Nice combination of GUI and CLI
+* Free and commercial version
+* 4 main windows, tabs, etc
+* Version control: Git and VPN
+* R Markdown
+* R Presentation
+
+RStudio Panes
+========================================================
+
+<img src="./Rworkshop-slides-figure/rstudio_image.png" width="900">
+
+General Stuff
+========================================================
+```{r, eval=FALSE}
+demo() # display available demos
+
+```{r, eval=FALSE}
+demo(graphics) # try graphics demo
+
+```{r, eval=FALSE}
+library() # show available packages on the computer
+
+```{r, eval=FALSE}
+search() # show loaded packages
+
+```{r, eval=FALSE}
+?hist # search for the usage of hist function
+
+```{r, eval=FALSE}
+??histogram # search for package documents containing the word "histogram"
+```
+
+
+Workspace of R
+========================================================
+
+R workspace stores objects like vecors, datasets and functions in memory (the available space for calculation is limited to the size of the RAM).
+
+```{r}
+a <- 5 # notice a in your Environment window
+```
+
+```{r}
+A <- "text" 
+```
+
+```{r, eval=FALSE}
+a
+A
+ls()
+print(c(a,A))
+print(a, A)
+```
+
+Look Ma, R can do Math! 
+========================================================
+```{r, eval=FALSE}
+1+1
+```
+
+```{r, eval=FALSE}
+2+runif(1,0,1)
+```
+
+```{r, eval=FALSE}
+2+runif(1,min=0,max=1)
+```
+
+```{r, eval=FALSE}
+3^2
+```
+
+```{r, eval=FALSE}
+3*3
+```
+
+```{r, eval=FALSE}
+sqrt(3*3) # comments
+```
+
+```{r}
+# comments are preceded by hash sign
+```
+
+R Objects: Vectors
+========================================================
+The most basic form of an R object.  
+Scalar values are __vectors of length one__.  
+A vector is an array object of the __same type__ (homogeneous) data elements.
+
+```{r, eval=FALSE}
+class(a)
+class(A)
+B <- c(a,A) # concatenation function
+B # see the values
+class(B) # why?
+```
+```{r, eval=FALSE}
+a <- rnorm(10)
+a[3:5] <- NA # NA is a missing value
+a
+```
+
+R Objects: Vectors (cont.)
+========================================================
+R has five basic or “atomic” classes of objects: 
+* character
+* numeric (real numbers) 
+* integer
+* complex
+* logical (True/False)
+
+A vector contains a set of data in any one of the atomic classes.
+
+
+R Objects: Matrices
+========================================================
+A matrix is a two-dimensional rectangular object of the __same type__ (homogeneous) data elements. 
+
+```{r, eval=FALSE}
+mat <- matrix(rnorm(6), nrow = 3, ncol = 2) 
+mat # a matrix
+dim(mat) # dimension
+t(mat) 
+summary(mat) 
+```
+
+R Objects: Data frames
+========================================================
+A data frame is a __list of vectors of equal length__ with possibly different types. It is used for storing retengular data tables.
+```{r, eval=FALSE}
+n <- c(2, 3, 5) # a vector 
+s <- c("aa", "bb", "cc") # a vector
+b <- c(TRUE, FALSE, TRUE) # a vector
+df <- data.frame(n, s, b) # a data frame
+df
+class(df$s) # was a string vector but now a factor. 
+mtcars # a built-in (attached) data frame
+mtcars$mpg
+```
+
+R Objects: Data frames (cont.)
+========================================================
+```{r, eval=FALSE}
+myFrame <- data.frame(y1=rnorm(100),y2=rnorm(100), y3=rnorm(100))
+head(myFrame) # display first few lines of data
+names(myFrame) # display column names
+summary(myFrame) # output depends on the data types
+plot(myFrame)
+```
+
+R Objects: Factors
+========================================================
+* Factors are a special compoud object used to represent __categorical data__ such as gender, social class, etc.
+* Factors have 'levels' attribute. They may be nominal or ordered.
+```{r, eval=FALSE}
+v <- c("a","b","c","c","b")
+x <- factor(v) # turn the character vector into a factor object
+z <- factor(v, ordered = TRUE) # ordered factor
+x
+z
+table(x)
+```
+
+
+Converting between different types
+==============================================
+Use of the as() family of functions. Type as. and wait to see the list of as() functions.
+```{r, eval=FALSE}
+integers <- 1:10
+as.character(integers)
+as.numeric(c('3.7', '4.8'))
+```
+
+```{r, eval=FALSE}
+df <- as.data.frame(mat)
+df
+```
+
+Getting help online and offline
+===============================
+* Rseek meta search engine: http://rseek.org/ 
+* R-help listserv: https://www.r-project.org/mail.html
+* Stack Overflow: http://stackoverflow.com/questions/tagged/r
+* Google!
+* Contact QCL: qcl@cmc.edu
+
+Module 2: Using RStudio 
+=============================
+* Project
+* Workspace
+* R Packages 
+
+Module 3: Working with Data
+=============================
+* Data import and export (csv vs. dta)
+* Subsetting
+* Using data frames vs. matrices
+
+Data Import
+==============================
+* read.csv() is a special case of read.table() 
+* Data import from your local folder
+```{r, eval=FALSE}
+class4 <- read.csv("class4.csv")
+head(class4) # good to look at a few lines
+names(class4)
+class(class4) # data.frame
+str(class4)
+```
+* Data import from the Internet
+```{r, eval=FALSE}
+data <- read.table(file="https://math.unm.edu/~james/normtemp.txt", header=F)  
+```
+
+Data Export
+=============================
+* Use write.table() to write data to a CSV file
+```{r, eval=FALSE}
+write.csv(data, file = "temp.csv", row.names = FALSE) 
+```
+* Writing out plots
+```{r, eval=FALSE}
+pdf('myplot.pdf', width = 7, height = 7) # call pdf() before calling plot()
+x <- rnorm(10); y <- rnorm(10)
+plot(x, y)
+dev.off()
+```
+
+Subsseting
+=========================
+Operators that can be used to extract subsets of R objects.
+* '[' and ']' always returns an object of the same class as the original; can be used to select more than one element.
+* '[[' and ']]' is used to extract elements of a list or a data frame; it can only be used to extract a single element.
+* $ is used to extract elements of a list or data frame by name.
+
+Subsetting (cont.)
+==========================
+```{r, eval=FALSE}
+x <- c("a", "b", "c", "c", "d", "a")
+x[1]
+x[1:4]
+x[x > "a"] 
+u <- x > "a" # what's u here?
+u
+x[u] # subsetting using a boolean vector
+y <- list(foo=x, bar=x[u]) 
+y
+y[[1]]
+y$bar
+```
+```{r, eval=FALSE}
+subset(mtcars, gear == 5) # use of subset function for data frames
+```
+
+Data frame vs matrix
+================================
+Consider the following:
+* Same types or different types? Numeric or other type?
+* Convenient using $ with col names?
+* Data size too big? (memory efficiency and size)
+```{r, eval=FALSE}
+m = matrix(1:400000, 2, 200000) # esp. for a large number of columns!
+d = as.data.frame(m)
+object.size(m) # 1600200 bytes
+object.size(d) # 22400568 bytes
+```
+* Conversion between data frame and matrix
+  + as.data.frame()
+  + as.matrix() or data.matrix() # consider coercion
+  
+Homework 
+========================================================
+* R Markdown (Hands-on)
+* Q & A
