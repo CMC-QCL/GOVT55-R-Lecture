@@ -1,7 +1,7 @@
 Visualization and Basic Statistical Analysis using R
 ========================================================
 author: Jeho Park
-date: Nov. 12, 2019
+date: Nov. 14, 2019
 transition: none
 
 R Guest Lecture 
@@ -47,40 +47,6 @@ Homework discussion
 * Were you able to install "knitr" package?
 * Were you able to render the homework.Rmd file and create an HTML file?
 
-Data Import
-==============================
-* read.csv() is a special case of read.table() 
-* Data import from your local folder
-
-```r
-class4 <- read.csv("class4.csv")
-head(class4) # good to look at a few lines
-names(class4)
-class(class4) # data.frame
-str(class4)
-```
-* Data import from the Internet
-
-```r
-data <- read.table(file="https://math.unm.edu/~james/normtemp.txt", header=F)  
-```
-
-Data Export
-=============================
-* Use write.table() to write data to a CSV file
-
-```r
-write.csv(data, file = "temp.csv", row.names = FALSE) 
-```
-* Writing out plots
-
-```r
-pdf('myplot.pdf', width = 7, height = 7) # call pdf() before calling plot()
-x <- rnorm(10); y <- rnorm(10)
-plot(x, y)
-dev.off()
-```
-
 Subsseting
 =========================
 Operators that can be used to extract subsets of R objects.
@@ -95,8 +61,8 @@ ggplot2 is an R package for statistical/data graphics
 It is based on "Grammar of Graphics" which was developed to present data (and its mapping) on 2D space by distinct components in layers  
 
 For example, a scatter plot is composed of  
-(1) data (i.e., two corresponding vectors: x and y),  
-(2) the scales and coordinate system (say horizontal and vertical axis and the scales in tic marks),  
+(1) data (e.g., two corresponding vectors: x and y),  
+(2) the scales and coordinate system (e.g., horizontal and vertical axis and the scales in tic marks),  
 (3) annotation such as title, subtitle, legends, etc.
 
 50 Cool ggplot2 Examples
@@ -115,7 +81,6 @@ Descriptive Statistics and Visualization: Anscome's Quartet
 
 ```r
 anscombe # Anscome's Quartet dataset
-# options(digits=2) 
 sapply(anscombe, mean)
 sapply(anscombe, sd)
 sapply(anscombe, var)
@@ -149,10 +114,16 @@ Another Cool Visualization Example: John Snow's Map
 =========================
 ![R Extentions](Rworkshop-slides-figure/johnsnow_map1.png)
 
+Another Cool Visualization Example: John Snow's Map
+=========================
+  
+
+![R Extentions](Rworkshop-slides-figure/broadblock_revised.jpg)
+
 Visualization: Scatter Plot
 =========================
 First import the STATA data file: crosssection.dta
-* Click on the file name, crosssection.dta
+* Click on the file, crosssection.dta
 * Select Import Dataset...
 * Check your environment for crosssection data frame
 * Now create a scatter plot using plot(x, y) function
@@ -177,7 +148,7 @@ crosssection <- read_dta("crosssection.dta")
 qplot(x = guns, y = deaths, data = crosssection)
 ```
 
-![plot of chunk unnamed-chunk-6](govt55-r-day2-figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-2](govt55-r-day2-figure/unnamed-chunk-2-1.png)
 
 Visualization using ggplot2: Line Plot
 =========================
@@ -193,7 +164,7 @@ ggplot(class5a,aes(year)) +
   geom_line(aes(y = maleLE, color = "Male"))
 ```
 
-![plot of chunk unnamed-chunk-7](govt55-r-day2-figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-3](govt55-r-day2-figure/unnamed-chunk-3-1.png)
 
 Visualization using ggplot2: Histogram and Density
 =========================
@@ -206,13 +177,13 @@ class5c <- read_dta("class5c.dta")
 qplot(gpa, data = class5c, geom = "histogram")
 ```
 
-![plot of chunk unnamed-chunk-8](govt55-r-day2-figure/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-4](govt55-r-day2-figure/unnamed-chunk-4-1.png)
 
 ```r
 qplot(gpa, data = class5c, geom = "density")
 ```
 
-![plot of chunk unnamed-chunk-8](govt55-r-day2-figure/unnamed-chunk-8-2.png)
+![plot of chunk unnamed-chunk-4](govt55-r-day2-figure/unnamed-chunk-4-2.png)
 
 Linear Regression 
 ========================================================
@@ -226,39 +197,25 @@ The formula that specifies a simple linear regression model $deaths = \beta_0 + 
 
 
 ```r
-lm(deaths ~ guns, data=crosssection)
+lm(deaths ~ guns, data = crosssection)
 ```
 __The function lm displays only the estimated coefficients, but the object returned by lm contains much more information.__
 
 Linear Regression and Visualization
 =========================
-* Using lm and abline function 
+* A hard way: Using lm and abline function 
 
 ## Using lm function and basic plot
 
 ```r
 plot(crosssection$guns, crosssection$deaths) # scatter plot
-lm1 <- lm(crosssection$deaths~crosssection$guns) # Linear Model
-lm1
+lm_guns <- lm(deaths ~ guns, data = crosssection) # Linear Model
+intercept <- lm_guns$coefficients[[1]]
+slope <- lm_guns$coefficients[[2]]
+abline(intercept, slope, col = "red") # draw a straight line having intercept and slope we found from linear model
 ```
 
-```
-
-Call:
-lm(formula = crosssection$deaths ~ crosssection$guns)
-
-Coefficients:
-      (Intercept)  crosssection$guns  
-           4.3745             0.2436  
-```
-
-```r
-intercept <- lm1$coefficients[[1]]
-slope <- lm1$coefficients[[2]]
-abline(intercept, slope) # draw a straight line having intercept and slope we found from linear model
-```
-
-![plot of chunk unnamed-chunk-10](govt55-r-day2-figure/unnamed-chunk-10-1.png)
+![plot of chunk unnamed-chunk-6](govt55-r-day2-figure/unnamed-chunk-6-1.png)
 
 Visualization only with ggplot2
 =========================
@@ -269,7 +226,7 @@ Visualization only with ggplot2
 qplot(crosssection$guns, crosssection$deaths, geom = c("point", "smooth"), method = "lm") # shows 95% CI
 ```
 
-![plot of chunk unnamed-chunk-11](govt55-r-day2-figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-7](govt55-r-day2-figure/unnamed-chunk-7-1.png)
 
 
 Linear Regression (cont.)
@@ -283,8 +240,8 @@ We want to know how good this model we just found is.
 
 
 ```r
-lm1 <- lm(crosssection$deaths~crosssection$guns) # Linear Model
-summary(lm1) 
+lm_guns <- lm(deaths ~ guns, data = crosssection) # Linear Model
+summary(lm_guns) 
 ```
 Look at p-Values and r-squared. 
 
@@ -292,13 +249,26 @@ Linear Regression (cont.)
 ========================================================
 __Linear Regression Diagnostic__
 
-> In Linear Regression, the Null Hypothesis is that the coefficients associated with the variables is equal to zero (no effect). With the p-Value < 0.05, we can reject the null hypothesis. 
+> In Linear Regression, the Null Hypothesis is that the coefficients associated with the variables is equal to zero (no effect). With the p-Value < 0.05, we reject the null hypothesis. 
 
 > R-squared value tells you that how good the model represent the actual population. It's called a goodness-of-fit measure for linear regression models. This statistic indicates the percentage of the variance in the dependent variable that the independent variables explain collectively.
   
 Linear Regression (cont.)
 ========================================================
-![R Extentions](Rworkshop-slides-figure/lm1-summary.png)
+![](Rworkshop-slides-figure/lm_guns_summary.png) ![](Rworkshop-slides-figure/stata-regression-output.png)
+
+Residual Plot
+==============
+
+```r
+res = residuals(lm_guns)
+plot(crosssection$guns, res, ylab="Residuals", xlab="Guns") 
+abline(0,0) # horizontal line
+```
+
+![plot of chunk unnamed-chunk-9](govt55-r-day2-figure/unnamed-chunk-9-1.png)
+
+
 
 Thank you!
 ======================
