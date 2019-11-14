@@ -22,7 +22,7 @@ summary(cars)
 ### (1) Using cars dataset, create a vector 'stop_mean' that contains mean stopping distance and display the result.
 ```{r stop_mean_chunk}
 # Type your answer below
-
+stop_mean <- mean(cars$dist)
 ```
 
 ### (2) Create a matrix 'cars_mat' by converting the cars dataset (which is a data frame) and diplay its type.
